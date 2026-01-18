@@ -50,6 +50,7 @@ body {
   letter-spacing: -0.01em;
 }
 
+
 .page {
   max-width: var(--maxw);
   margin: 0 auto;
@@ -93,11 +94,6 @@ body {
   position: absolute;
   inset: -8px;
   border-radius: 999px;
-  -webkit-backdrop-filter: invert(1);
-  backdrop-filter: invert(1);
-  display: none;
-  display: block;
-  background: rgba(255, 255, 255, 0.001); /* 아주 미세 */
   -webkit-backdrop-filter: invert(1);
   backdrop-filter: invert(1);
 }
