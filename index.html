@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Guestbook</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <div class="page">
+      <!-- Top: logo center / admin link right -->
+      <header class="top">
+        <div class="line"></div>
+
+        <div class="top__inner">
+          <div></div>
+
+          <div class="logo">
+            <img id="logoImg" alt="Logo" />
+            <div id="logoFallback" class="logo__fallback">LOGO</div>
+          </div>
+
+          <div class="top__right">
+            <a class="adminLink" href="./entries.html"
+              >For Administrators Only</a
+            >
+          </div>
+        </div>
+
+        <div class="line"></div>
+      </header>
+
+      <section class="hero">
+        <div class="hero__big">GUEST</div>
+        <div class="hero__big">BOOK</div>
+      </section>
+
+      <main class="main">
+        <section class="section">
+          <div class="section__title">Leave a note</div>
+          <div class="line"></div>
+
+          <form id="entryForm" class="form" autocomplete="off">
+            <div class="row">
+              <label class="label" for="target">FOR</label>
+              <select class="select" id="target" name="target" required>
+                <option value="hyeonwoo">Hyeonwoo</option>
+                <option value="subin">Subin</option>
+                <option value="both">Both</option>
+              </select>
+            </div>
+
+            <div class="line light"></div>
+
+            <div class="row">
+              <label class="label" for="name">NAME</label>
+              <input
+                class="input"
+                id="name"
+                name="name"
+                maxlength="30"
+                placeholder="ex) Hyeonwoo"
+                required
+              />
+            </div>
+
+            <div class="line light"></div>
+
+            <div class="row">
+              <label class="label" for="message">MESSAGE</label>
+              <textarea
+                class="textarea"
+                id="message"
+                name="message"
+                maxlength="400"
+                placeholder="남기고 싶은 말을 적어줘."
+                required
+              ></textarea>
+            </div>
+
+            <div class="line"></div>
+
+            <button class="btn" type="submit">Submit</button>
+            <div class="hint" id="hintText">
+              저장: 이 기기(Safari) 안에만 보관됨.
+            </div>
+          </form>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="line"></div>
+        <div class="footer__text">© GUESTBOOK</div>
+      </footer>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

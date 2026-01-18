@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Guestbook — Admin</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <div class="page">
+      <header class="top">
+        <div class="line"></div>
+
+        <div class="top__inner">
+          <div class="top__left">
+            <a class="adminLink" href="./index.html">Back</a>
+          </div>
+
+          <div class="logo logo--text">ADMIN</div>
+
+          <div class="top__right">
+            <button class="adminLink" id="lockBtn" type="button">Lock</button>
+          </div>
+        </div>
+
+        <div class="line"></div>
+      </header>
+
+      <section class="hero hero--small">
+        <div class="hero__big hero__big--small">ENTRIES</div>
+      </section>
+
+      <main class="main">
+        <!-- Gate -->
+        <section class="section" id="gate">
+          <div class="section__title">Password</div>
+          <div class="line"></div>
+
+          <form id="pwForm" class="form" autocomplete="off">
+            <div class="row">
+              <label class="label" for="pw">MASTER KEY</label>
+              <input
+                class="input"
+                id="pw"
+                name="pw"
+                type="password"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <div class="line"></div>
+
+            <button class="btn" type="submit">Unlock</button>
+            <div class="hint" id="pwHint">비번이 맞으면 목록이 열림.</div>
+          </form>
+        </section>
+
+        <!-- Content -->
+        <section class="section hidden" id="content">
+          <div class="section__head">
+            <div class="section__title">Entries</div>
+            <div class="meta" id="countText">0</div>
+          </div>
+
+          <div class="line"></div>
+
+          <!-- Filters -->
+          <div class="filters">
+            <button class="chip is-active" data-filter="all" type="button">
+              All
+            </button>
+            <button class="chip" data-filter="hyeonwoo" type="button">
+              Hyeonwoo
+            </button>
+            <button class="chip" data-filter="subin" type="button">
+              Subin
+            </button>
+            <button class="chip" data-filter="both" type="button">Both</button>
+          </div>
+
+          <div class="line light"></div>
+
+          <!-- Export -->
+          <div class="exports">
+            <button class="adminLink" id="downloadJsonBtn" type="button">
+              Download JSON
+            </button>
+            <button class="adminLink" id="downloadCsvBtn" type="button">
+              Download CSV
+            </button>
+          </div>
+
+          <div class="line"></div>
+
+          <!-- List -->
+          <div id="list" class="list"></div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="line"></div>
+        <div class="footer__text">© GUESTBOOK</div>
+      </footer>
+    </div>
+
+    <script src="./entries.js"></script>
+  </body>
+</html>
