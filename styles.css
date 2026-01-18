@@ -283,3 +283,34 @@ c .adminLink {
     grid-template-columns: 78px 1fr;
   }
 }
+
+/* =========================
+   Admin page overrides
+   (메인 페이지 로고/고정 버튼 영향 제거)
+========================= */
+.page--admin{
+  /* 메인에서 로고 때문에 padding-top 크게 준 경우 → admin에서는 제거 */
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Admin에서 버튼이 fixed로 붙는 문제 해결 */
+.page--admin .btn{
+  position: static;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  margin: 0;
+  z-index: auto;
+  padding-bottom: 16px; /* 안전하게 일반 버튼 패딩 */
+}
+
+/* 혹시 메인에서 page에 fixed 버튼 공간 확보로 padding-bottom 크게 줬으면 admin에서만 원복 */
+.page--admin{
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Admin 버튼 전용(혹시 필요할 때만) */
+.page--admin .btn--admin{
+  width: 100%;
+}

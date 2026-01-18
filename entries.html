@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
 
-  <body>
-    <div class="page">
+  <body class="is-admin">
+    <div class="page page--admin">
       <header class="top">
         <div class="line"></div>
 
@@ -29,10 +29,6 @@
 
         <div class="line"></div>
       </header>
-
-      <section class="hero hero--small">
-        <div class="hero__big hero__big--small">ENTRIES</div>
-      </section>
 
       <main class="main">
         <!-- Gate -->
@@ -55,7 +51,8 @@
 
             <div class="line"></div>
 
-            <button class="btn" type="submit">Unlock</button>
+            <!-- Admin에서는 fixed 버튼 금지 -->
+            <button class="btn btn--admin" type="submit">Unlock</button>
             <div class="hint" id="pwHint">비번이 맞으면 목록이 열림.</div>
           </form>
         </section>
@@ -104,7 +101,7 @@
 
       <footer class="footer">
         <div class="line"></div>
-        <div class="footer__text">© GUESTBOOK</div>
+        <div class="footer__text">© D5</div>
       </footer>
     </div>
 
