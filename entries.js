@@ -1,7 +1,7 @@
 const STORAGE_KEY = 'guestbook_entries_v2';
 
 /** 여기 비번만 바꿔서 쓰면 됨 */
-const MASTER_PASSWORD = '1234';
+const MASTER_PASSWORD = '1211';
 
 /** 세션에서 잠금 해제 유지 (탭 닫으면 풀림) */
 const SESSION_KEY = 'guestbook_admin_unlocked';
