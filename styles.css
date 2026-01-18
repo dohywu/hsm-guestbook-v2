@@ -37,17 +37,26 @@ body {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
+/* FULL-BLEED horizontal strokes */
 .line {
   height: 0;
   border-top: 2px solid var(--line);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
 .line.light {
   border-top-width: 1px;
   opacity: 0.9;
 }
 
+/* Header */
 .top {
   padding: 12px var(--pad);
+}
+.top--logoOnly {
+  padding-top: 18px;
+  padding-bottom: 8px;
 }
 .top__inner {
   display: grid;
@@ -55,6 +64,11 @@ body {
   align-items: center;
   gap: 10px;
   height: 56px;
+}
+.top__inner--center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .top__left {
   display: flex;
@@ -86,11 +100,8 @@ body {
   letter-spacing: 0.22em;
   color: var(--muted);
 }
-.logo--text {
-  color: var(--muted);
-}
 
-/* admin link / header button (no box borders, keep minimal) */
+/* admin link */
 .adminLink {
   font-size: var(--t-small);
   letter-spacing: 0.14em;
@@ -106,21 +117,16 @@ body {
   text-decoration: underline;
 }
 
+/* hero */
 .hero {
   padding: 14px var(--pad) 10px;
   border-bottom: 2px solid #000;
-}
-.hero--small {
-  padding: 12px var(--pad) 8px;
 }
 .hero__big {
   font-size: var(--t-hero);
   line-height: 0.95;
   letter-spacing: -0.04em;
   font-weight: 700;
-}
-.hero__big--small {
-  font-size: 44px;
 }
 
 .main {
@@ -130,25 +136,14 @@ body {
   gap: 18px;
 }
 
-/* “박스” 대신 섹션 + 라인으로만 */
+/* section */
 .section {
   padding: 0;
-}
-.section__head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
 }
 .section__title {
   font-size: var(--t-title);
   font-weight: 700;
   letter-spacing: -0.02em;
-}
-.meta {
-  font-size: 12px;
-  color: var(--muted);
-  white-space: nowrap;
 }
 
 .form {
@@ -174,7 +169,7 @@ body {
   padding-top: 10px;
 }
 
-/* inputs: 네모 테두리 제거, underline 느낌 */
+/* inputs: remove underline strokes completely */
 .input,
 .select,
 .textarea {
@@ -184,23 +179,33 @@ body {
   background: transparent;
   color: #000;
   padding: 10px 0;
-  border-bottom: 1px solid #000; /* 가로 스트로크 기반 */
-  border-radius: 0;
   width: 100%;
+  border-radius: 0;
 }
+
+/* hard override: no underline */
+.input,
+.select,
+.textarea {
+  border-bottom: none !important;
+}
+
 .textarea {
   min-height: 140px;
   resize: none;
   line-height: 1.55;
 }
 
-/* submit: 블랙 바는 유지 (네모 박스라기보다 바) */
+/* Submit: FULL-BLEED */
 .btn {
-  width: 100%;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+
   background: #000;
   color: #fff;
   border: none;
-  padding: 14px 12px;
+  padding: 16px 12px;
   font-size: 16px;
   letter-spacing: 0.02em;
 }
@@ -212,7 +217,29 @@ body {
   line-height: 1.4;
 }
 
-/* entries controls */
+/* admin area bottom */
+.adminArea {
+  padding: 0 var(--pad);
+  margin-top: 18px;
+}
+.adminLink--bottom {
+  display: block;
+  padding: 14px 0 18px;
+  text-align: left;
+}
+
+/* footer */
+.footer {
+  padding: 14px var(--pad) 22px;
+}
+.footer__text {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* entries page styles (keep for your entries.html) */
 .filters {
   display: flex;
   gap: 10px;
@@ -249,7 +276,7 @@ body {
   padding: 14px 0;
 }
 .item + .item {
-  border-top: 1px solid #000; /* 가로 라인으로만 구분 */
+  border-top: 1px solid #000;
 }
 .item__head {
   display: flex;
@@ -290,16 +317,6 @@ body {
   color: var(--muted);
   font-size: 13px;
   padding: 10px 0;
-}
-
-.footer {
-  padding: 14px var(--pad) 22px;
-}
-.footer__text {
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
 }
 
 .hidden {

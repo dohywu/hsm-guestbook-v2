@@ -1,7 +1,7 @@
 const STORAGE_KEY = 'guestbook_entries_v2';
 
 /** 로고 URL 넣으면 상단 중앙에 표시됨 */
-const LOGO_SRC = ''; // 예: "https://.../logo.png"
+const LOGO_SRC = 'https://dohywu.github.io/hsm-guestbook-v2/src/logo.png';
 
 const form = document.getElementById('entryForm');
 const hintText = document.getElementById('hintText');

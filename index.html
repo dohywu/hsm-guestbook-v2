@@ -12,26 +12,14 @@
 
   <body>
     <div class="page">
-      <!-- Top: logo center / admin link right -->
-      <header class="top">
-        <div class="line"></div>
-
-        <div class="top__inner">
-          <div></div>
-
+      <!-- Header: logo only (no lines above/below) -->
+      <header class="top top--logoOnly">
+        <div class="top__inner top__inner--center">
           <div class="logo">
             <img id="logoImg" alt="Logo" />
             <div id="logoFallback" class="logo__fallback">LOGO</div>
           </div>
-
-          <div class="top__right">
-            <a class="adminLink" href="./entries.html"
-              >For Administrators Only</a
-            >
-          </div>
         </div>
-
-        <div class="line"></div>
       </header>
 
       <section class="hero">
@@ -91,6 +79,14 @@
           </form>
         </section>
       </main>
+
+      <!-- Admin link moved to bottom -->
+      <div class="adminArea">
+        <div class="line"></div>
+        <a class="adminLink adminLink--bottom" href="./entries.html"
+          >For Administrators Only</a
+        >
+      </div>
 
       <footer class="footer">
         <div class="line"></div>
