@@ -11,25 +11,17 @@
   </head>
 
   <body>
+    <!-- Fixed Logo (top center) -->
+    <div class="logoFixed" aria-hidden="true">
+      <div class="logoFixed__invert"></div>
+      <img id="logoImg" alt="Logo" class="logoFixed__img" />
+      <div id="logoFallback" class="logoFixed__fallback">LOGO</div>
+    </div>
+
     <div class="page">
-      <!-- Header: logo only (no lines above/below) -->
-      <header class="top top--logoOnly">
-        <div class="top__inner top__inner--center">
-          <div class="logo">
-            <img id="logoImg" alt="Logo" />
-            <div id="logoFallback" class="logo__fallback">LOGO</div>
-          </div>
-        </div>
-      </header>
-
-      <section class="hero">
-        <div class="hero__big">GUEST</div>
-        <div class="hero__big">BOOK</div>
-      </section>
-
       <main class="main">
         <section class="section">
-          <div class="section__title">Leave a note</div>
+          <div class="section__title">Leave a note.</div>
           <div class="line"></div>
 
           <form id="entryForm" class="form" autocomplete="off">
@@ -58,7 +50,7 @@
 
             <div class="line light"></div>
 
-            <div class="row">
+            <div class="row row--message">
               <label class="label" for="message">MESSAGE</label>
               <textarea
                 class="textarea"
@@ -69,30 +61,18 @@
                 required
               ></textarea>
             </div>
-
-            <div class="line"></div>
-
             <button class="btn" type="submit">Submit</button>
-            <div class="hint" id="hintText">
-              저장: 이 기기(Safari) 안에만 보관됨.
-            </div>
           </form>
         </section>
       </main>
 
-      <!-- Admin link moved to bottom -->
-      <div class="adminArea">
-        <div class="line"></div>
-        <a class="adminLink adminLink--bottom" href="./entries.html"
-          >For Administrators Only</a
-        >
-      </div>
-
-      <footer class="footer">
-        <div class="line"></div>
-        <div class="footer__text">© GUESTBOOK</div>
-      </footer>
-    </div>
+     <div class="adminFooter">
+  <div class="line"></div>
+  <div class="adminFooter__row">
+    <a class="adminLink" href="./entries.html">For Administrators Only</a>
+    <div class="footer__text">© D5</div>
+  </div>
+</div>
 
     <script src="./app.js"></script>
   </body>
