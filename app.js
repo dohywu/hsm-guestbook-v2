@@ -1,5 +1,88 @@
 const STORAGE_KEY = 'guestbook_entries_v2';
 
+let toastTimer = null;
+
+function ensureToast() {
+  let el = document.getElementById('toast');
+  if (el) return el;
+
+  // Create toast element
+  el = document.createElement('div');
+  el.id = 'toast';
+  el.className = 'toast';
+  el.setAttribute('role', 'status');
+  el.setAttribute('aria-live', 'polite');
+  document.body.appendChild(el);
+
+  // Inject minimal CSS (so it works even if styles.css misses it)
+  const styleId = 'toast-style';
+  if (!document.getElementById(styleId)) {
+    const s = document.createElement('style');
+    s.id = styleId;
+    s.textContent = `
+      .toast{
+        position: fixed;
+        left: 50%;
+        bottom: calc(110px + env(safe-area-inset-bottom)); /* fixed submit 위로 */
+        transform: translateX(-50%);
+        z-index: 999999;
+
+        padding: 12px 14px;
+        background: #000;
+        color: #fff;
+        font-size: 13px;
+        letter-spacing: .02em;
+
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 600ms ease;
+      }
+      .toast.is-show{ opacity: 1; }
+    `;
+    document.head.appendChild(s);
+  }
+
+  return el;
+}
+
+function showToast(message, ms = 4000) {
+  const toastEl = ensureToast();
+  toastEl.textContent = message;
+
+  if (toastTimer) clearTimeout(toastTimer);
+
+  // restart animation
+  toastEl.classList.remove('is-show');
+  void toastEl.offsetWidth;
+  toastEl.classList.add('is-show');
+
+  toastTimer = setTimeout(() => {
+    toastEl.classList.remove('is-show');
+  }, ms);
+}
+
+const toastEl = document.getElementById('toast');
+let toastTimer = null;
+
+function showToast(message, ms = 4000) {
+  if (!toastEl) return;
+
+  toastEl.textContent = message;
+
+  // 기존 타이머 있으면 초기화
+  if (toastTimer) clearTimeout(toastTimer);
+
+  // 다시 보여주기(연속 클릭 대비)
+  toastEl.classList.remove('is-show');
+  // reflow로 transition 확실히 먹이기
+  void toastEl.offsetWidth;
+  toastEl.classList.add('is-show');
+
+  toastTimer = setTimeout(() => {
+    toastEl.classList.remove('is-show');
+  }, ms);
+}
+
 /** 로고 URL */
 const LOGO_SRC = 'https://dohywu.github.io/hsm-guestbook-v2/src/logo.png';
 
@@ -74,4 +157,5 @@ form.addEventListener('submit', (e) => {
   form.reset();
   form.target.value = 'hyeonwoo';
   hintText.textContent = 'Saved.';
+  showToast('Submitted.', 4000);
 });

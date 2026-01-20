@@ -314,3 +314,29 @@ c .adminLink {
 .page--admin .btn--admin{
   width: 100%;
 }
+
+/* Toast */
+.toast{
+  position: fixed;
+  left: 50%;
+  bottom: calc(90px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 20000;
+
+  padding: 12px 14px;
+  background: #000;
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 600ms ease;
+  
+}
+
+/* visible */
+.toast.is-show{
+  opacity: 1;
+}
