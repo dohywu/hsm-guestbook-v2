@@ -51,9 +51,9 @@
 
             <div class="line"></div>
 
-            <!-- Admin에서는 fixed 버튼 금지 -->
+            <!-- Admin에서는 fixed 버튼 금지: btn--admin -->
             <button class="btn btn--admin" type="submit">Unlock</button>
-            <div class="hint" id="pwHint">비번이 맞으면 목록이 열림.</div>
+            <div class="hint" id="pwHint"></div>
           </form>
         </section>
 
@@ -99,10 +99,15 @@
         </section>
       </main>
 
-      <footer class="footer">
+      <div class="adminFooter">
         <div class="line"></div>
-        <div class="footer__text">© D5</div>
-      </footer>
+        <div class="adminFooter__row">
+          <span class="adminLink" style="cursor: default; text-decoration: none"
+            >Entries</span
+          >
+          <div class="footer__text">© D5</div>
+        </div>
+      </div>
     </div>
 
     <script src="./entries.js"></script>

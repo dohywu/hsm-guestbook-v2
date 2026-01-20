@@ -1,10 +1,10 @@
 const STORAGE_KEY = 'guestbook_entries_v2';
 
-/** 여기 비번만 바꿔서 쓰면 됨 */
-const MASTER_PASSWORD = '1211';
+/** 여기 비번 바꾸면 됨 */
+const MASTER_PASSWORD = '1234';
 
-/** 세션에서 잠금 해제 유지 (탭 닫으면 풀림) */
-const SESSION_KEY = 'guestbook_admin_unlocked';
+/** 탭 닫으면 풀리게 (세션 저장) */
+const SESSION_KEY = 'guestbook_admin_unlocked_v1';
 
 const gate = document.getElementById('gate');
 const content = document.getElementById('content');
@@ -20,7 +20,6 @@ const downloadJsonBtn = document.getElementById('downloadJsonBtn');
 const downloadCsvBtn = document.getElementById('downloadCsvBtn');
 
 const filterButtons = Array.from(document.querySelectorAll('.chip'));
-
 let currentFilter = 'all';
 
 function loadEntries() {
@@ -36,7 +35,9 @@ function loadEntries() {
 function pad2(n) {
   return String(n).padStart(2, '0');
 }
+
 function formatDate(ms) {
+  if (!ms) return '—';
   const d = new Date(ms);
   const yy = String(d.getFullYear()).slice(2);
   const mm = pad2(d.getMonth() + 1);
@@ -62,7 +63,7 @@ function escapeHTML(str) {
 
 function labelTarget(t) {
   if (t === 'hyeonwoo') return 'Hyeonwoo';
-  _attach: if (t === 'subin') return 'Subin';
+  if (t === 'subin') return 'Subin';
   if (t === 'both') return 'Both';
   return '—';
 }
@@ -74,20 +75,22 @@ function applyFilter(entries) {
 
 function render() {
   const all = loadEntries();
-  const entries = applyFilter(all);
+  const filtered = applyFilter(all);
 
-  countText.textContent = `${entries.length}`;
+  if (countText) countText.textContent = String(filtered.length);
 
-  if (!entries.length) {
+  if (!listEl) return;
+
+  if (!filtered.length) {
     listEl.innerHTML = `<div class="empty">해당 조건의 방명록이 없어.</div>`;
     return;
   }
 
-  listEl.innerHTML = entries
+  listEl.innerHTML = filtered
     .map((e) => {
       const name = escapeHTML(e.name || 'Anonymous');
       const msg = escapeHTML(e.message || '');
-      const date = e.createdAt ? formatDate(e.createdAt) : '—';
+      const date = formatDate(e.createdAt);
       const tag = escapeHTML(labelTarget(e.target));
 
       return `
@@ -111,29 +114,38 @@ function setUnlocked(on) {
   else sessionStorage.removeItem(SESSION_KEY);
 
   const unlocked = sessionStorage.getItem(SESSION_KEY) === '1';
-  gate.classList.toggle('hidden', unlocked);
-  content.classList.toggle('hidden', !unlocked);
 
+  if (gate) gate.classList.toggle('hidden', unlocked);
+  if (content) content.classList.toggle('hidden', !unlocked);
+
+  if (pwHint) pwHint.textContent = '';
   if (unlocked) render();
 }
 
-pwForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const pw = (pwForm.pw.value || '').trim();
+/* Password submit */
+if (pwForm) {
+  pwForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const pwInput = pwForm.querySelector('#pw');
+    const pw = (pwInput?.value || '').trim();
 
-  if (pw === MASTER_PASSWORD) {
-    pwHint.textContent = 'Unlocked.';
-    pwForm.reset();
-    setUnlocked(true);
-  } else {
-    pwHint.textContent = '비번 틀림.';
-  }
-});
+    if (pw === MASTER_PASSWORD) {
+      setUnlocked(true);
+      if (pwInput) pwInput.value = '';
+    } else {
+      if (pwHint) pwHint.textContent = '비번 틀림.';
+    }
+  });
+}
 
-lockBtn.addEventListener('click', () => {
-  setUnlocked(false);
-});
+/* Lock */
+if (lockBtn) {
+  lockBtn.addEventListener('click', () => {
+    setUnlocked(false);
+  });
+}
 
+/* Filters */
 filterButtons.forEach((btn) => {
   btn.addEventListener('click', () => {
     currentFilter = btn.dataset.filter || 'all';
@@ -142,31 +154,20 @@ filterButtons.forEach((btn) => {
   });
 });
 
+/* Export helpers */
 function downloadBlob(filename, content, mime) {
   const blob = new Blob([content], { type: mime });
   const url = URL.createObjectURL(blob);
+
   const a = document.createElement('a');
   a.href = url;
   a.download = filename;
   document.body.appendChild(a);
   a.click();
   a.remove();
+
   URL.revokeObjectURL(url);
 }
-
-downloadJsonBtn.addEventListener('click', () => {
-  const entries = loadEntries();
-  const payload = {
-    exportedAt: new Date().toISOString(),
-    count: entries.length,
-    entries,
-  };
-  downloadBlob(
-    `guestbook_${Date.now()}.json`,
-    JSON.stringify(payload, null, 2),
-    'application/json;charset=utf-8',
-  );
-});
 
 function csvEscape(value) {
   const s = String(value ?? '');
@@ -175,24 +176,45 @@ function csvEscape(value) {
   return needs ? `"${escaped}"` : escaped;
 }
 
-downloadCsvBtn.addEventListener('click', () => {
-  const entries = loadEntries();
+/* Download JSON */
+if (downloadJsonBtn) {
+  downloadJsonBtn.addEventListener('click', () => {
+    const entries = loadEntries();
+    const payload = {
+      exportedAt: new Date().toISOString(),
+      count: entries.length,
+      entries,
+    };
+    downloadBlob(
+      `guestbook_${Date.now()}.json`,
+      JSON.stringify(payload, null, 2),
+      'application/json;charset=utf-8',
+    );
+  });
+}
 
-  const header = ['id', 'target', 'name', 'message', 'createdAt'];
-  const rows = entries.map((e) =>
-    [
-      csvEscape(e.id),
-      csvEscape(e.target),
-      csvEscape(e.name),
-      csvEscape(e.message),
-      csvEscape(e.createdAt ? formatDate(e.createdAt) : ''),
-    ].join(','),
-  );
+/* Download CSV */
+if (downloadCsvBtn) {
+  downloadCsvBtn.addEventListener('click', () => {
+    const entries = loadEntries();
 
-  const bom = '\uFEFF'; // 한글 깨짐 방지
-  const csv = bom + header.join(',') + '\n' + rows.join('\n');
-  downloadBlob(`guestbook_${Date.now()}.csv`, csv, 'text/csv;charset=utf-8');
-});
+    const header = ['id', 'target', 'name', 'message', 'createdAt'];
+    const rows = entries.map((e) =>
+      [
+        csvEscape(e.id),
+        csvEscape(e.target),
+        csvEscape(e.name),
+        csvEscape(e.message),
+        csvEscape(e.createdAt ? formatDate(e.createdAt) : ''),
+      ].join(','),
+    );
 
-// init
+    const bom = '\uFEFF'; // 한글 깨짐 방지
+    const csv = bom + header.join(',') + '\n' + rows.join('\n');
+
+    downloadBlob(`guestbook_${Date.now()}.csv`, csv, 'text/csv;charset=utf-8');
+  });
+}
+
+/* Init */
 setUnlocked(sessionStorage.getItem(SESSION_KEY) === '1');

@@ -10,25 +10,21 @@
   --t-title: 22px;
   --t-small: 11px;
 
-  /* fixed logo: 4배 */
+  /* fixed logo (4x) */
   --logoW: 216px; /* 54 * 4 */
   --logoH: 104px; /* 26 * 4 */
   --logoTop: 40px;
 
-  /**
-   * 핵심: 로고가 커진 만큼, 콘텐츠 시작점을 "로고 아래"로 확실히 내리기
-   * logoTop(14) + logoH(104) + 여유(24) ≈ 142
-   * -> 스크린샷처럼 아직 겹치니까 여유를 더 줌
-   */
+  /* 로고 아래로 콘텐츠 밀기 */
   --logoSafePad: 190px;
 
-  /* rows: 더 타이트 (현재 6 -> 절반 3) */
+  /* rows */
   --row-pad-y: 1px;
 
-  /* leave a note 상단 패딩값 조절 하기위한 변수 추가 */
+  /* leave a note 상단 패딩 조절 */
   --leaveTopPad: 30px;
 
-  /* form 간격도 살짝만 유지 */
+  /* form */
   --form-gap: 10px;
   --hint-gap: 10px;
 }
@@ -50,14 +46,16 @@ body {
   letter-spacing: -0.01em;
 }
 
-
+/* page */
 .page {
   max-width: var(--maxw);
   margin: 0 auto;
   min-height: 100vh;
-  padding-bottom: 90px;
 
-  /* 로고 방해 0%: 로고 아래부터 콘텐츠 시작 */
+  /* fixed submit 공간 확보 */
+  padding-bottom: calc(110px + env(safe-area-inset-bottom));
+
+  /* 로고 아래부터 시작 */
   padding-top: calc(var(--logoSafePad) + env(safe-area-inset-top));
 }
 
@@ -74,7 +72,7 @@ body {
   opacity: 0.9;
 }
 
-/* Fixed logo (top center) */
+/* Fixed logo */
 .logoFixed {
   position: fixed;
   top: calc(var(--logoTop) + env(safe-area-inset-top));
@@ -89,21 +87,11 @@ body {
   isolation: isolate;
 }
 
-/* invert behind logo (Safari often supports) */
-.logoFixed__invert {
-  position: absolute;
-  inset: -8px;
-  border-radius: 999px;
-  -webkit-backdrop-filter: invert(1);
-  backdrop-filter: invert(1);
-}
-
 .logoFixed__img {
   display: none;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  mix-blend-mode: difference;
 }
 .logoFixed__fallback {
   display: block;
@@ -111,29 +99,26 @@ body {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--fg);
-  mix-blend-mode: difference;
 }
 
-/* main spacing: 기존 유지 */
+/* main */
 .main {
   padding: 16px var(--pad);
   padding-top: var(--leaveTopPad);
   display: flex;
   flex-direction: column;
   gap: 18px;
-  
 }
 
 .section {
   padding: 0;
 }
 .section__title {
-  font-size: var(--t-title);
+  font-size: 25px;
   font-weight: 700;
   letter-spacing: -0.02em;
   margin-top: 20px;
   margin-bottom: 15px;
-  font-size: 25px;
 }
 
 /* form */
@@ -144,7 +129,7 @@ body {
   gap: var(--form-gap);
 }
 
-/* rows: 상/하 패딩 더 타이트 */
+/* rows */
 .row {
   display: grid;
   grid-template-columns: 90px 1fr;
@@ -152,7 +137,6 @@ body {
   align-items: center;
   padding: var(--row-pad-y) 0;
 }
-
 .row--message {
   align-items: start;
   padding-top: calc(var(--row-pad-y) + 1px);
@@ -189,28 +173,24 @@ body {
   padding-top: 2px;
 }
 
-/* Submit: FULL-BLEED */
+/* Submit: fixed bottom full width */
 .btn {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-
-  background: #000;
-  color: #fff;
-  border: none;
-  padding: 16px 12px;
-  font-size: 16px;
-  letter-spacing: 0.02em;
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
 
   width: 100vw;
-  margin: 0; /* 기존에 있던 100vw용 margin-left/right 계산은 제거 */
+  margin: 0;
   z-index: 9999;
 
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 16px 12px;
   padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  font-size: 16px;
+  letter-spacing: 0.02em;
 }
 
 /* hint */
@@ -219,14 +199,24 @@ body {
   font-size: 12px;
   color: var(--muted);
   line-height: 1.4;
+  min-height: 16px;
 }
 
-/* admin bottom */
-.adminArea {
+/* Admin footer row */
+.adminFooter {
   padding: 0 var(--pad);
   margin-top: 18px;
 }
-c .adminLink {
+.adminFooter__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 0 18px;
+}
+
+/* link style (visited purple 방지) */
+.adminLink {
   font-size: var(--t-small);
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -237,89 +227,26 @@ c .adminLink {
   padding: 0;
   cursor: pointer;
 }
+.adminLink:visited {
+  color: #000;
+}
 .adminLink:hover {
   text-decoration: underline;
 }
-.adminLink--bottom {
-  display: block;
-  padding: 14px 0 2px;
-  text-align: left;
-  margin-bottom: 10px;
-}
 
-/* footer */
-.footer {
-  padding: 14px var(--pad) 22px;
-  margin-top: 20px;
-}
+/* footer text */
 .footer__text {
   font-size: 11px;
   color: var(--muted);
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  margin-top: 20px;
-}
-
-.hidden {
-  display: none;
-}
-
-.adminFooter{
-  padding: 0 var(--pad);
-  margin-top: 18px;
-}
-
-.adminFooter__row{
-  display:flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-  padding: 14px 0 18px;
-}
-    /* 작은 화면에서는 로고-safe 더 보수적으로 */
-    --logoSafePad: 200px;
-  }
-  .row {
-    grid-template-columns: 78px 1fr;
-  }
-}
-
-/* =========================
-   Admin page overrides
-   (메인 페이지 로고/고정 버튼 영향 제거)
-========================= */
-.page--admin{
-  /* 메인에서 로고 때문에 padding-top 크게 준 경우 → admin에서는 제거 */
-  padding-top: env(safe-area-inset-top);
-}
-
-/* Admin에서 버튼이 fixed로 붙는 문제 해결 */
-.page--admin .btn{
-  position: static;
-  left: auto;
-  right: auto;
-  bottom: auto;
-  width: 100%;
-  margin: 0;
-  z-index: auto;
-  padding-bottom: 16px; /* 안전하게 일반 버튼 패딩 */
-}
-
-/* 혹시 메인에서 page에 fixed 버튼 공간 확보로 padding-bottom 크게 줬으면 admin에서만 원복 */
-.page--admin{
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-/* Admin 버튼 전용(혹시 필요할 때만) */
-.page--admin .btn--admin{
-  width: 100%;
 }
 
 /* Toast */
-.toast{
+.toast {
   position: fixed;
   left: 50%;
-  bottom: calc(90px + env(safe-area-inset-bottom));
+  bottom: calc(90px + env(safe-area-inset-bottom)); /* fixed submit 위 */
   transform: translateX(-50%);
   z-index: 20000;
 
@@ -331,12 +258,41 @@ c .adminLink {
 
   opacity: 0;
   pointer-events: none;
-
   transition: opacity 600ms ease;
-  
+}
+.toast.is-show {
+  opacity: 1;
 }
 
-/* visible */
-.toast.is-show{
-  opacity: 1;
+/* small screen */
+@media (max-width: 375px) {
+  :root {
+    --logoSafePad: 200px;
+  }
+  .row {
+    grid-template-columns: 78px 1fr;
+  }
+}
+
+/* =========================
+   Admin page overrides
+   (메인 페이지 fixed 버튼/로고 패딩 영향 제거)
+========================= */
+.page--admin {
+  /* 메인처럼 로고-safe 패딩 적용되면 admin이 이상해짐 → 끄기 */
+  padding-top: env(safe-area-inset-top);
+  /* 메인에서 fixed 버튼 공간 확보 padding-bottom이 크면 → admin에서는 정상으로 */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* admin에서는 버튼 fixed 금지 */
+.page--admin .btn {
+  position: static;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+  margin: 0;
+  z-index: auto;
+  padding-bottom: 16px;
 }
