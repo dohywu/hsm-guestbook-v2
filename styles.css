@@ -296,3 +296,144 @@ body {
   z-index: auto;
   padding-bottom: 16px;
 }
+
+/* =========================
+   Entries(Admin) Layout Fix
+   - header 3-column align
+   - section head align (Entries + count)
+   - filter chips / exports as typography
+========================= */
+
+/* Admin page: main spacing reset (메인 페이지 leaveTopPad 영향 제거) */
+.page--admin .main {
+  padding-top: 16px; /* leaveTopPad 무시 */
+}
+
+/* Header layout (BACK | ADMIN | LOCK 한 줄) */
+.page--admin .top {
+  padding: 12px var(--pad);
+}
+.page--admin .top__inner {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+}
+.page--admin .top__left {
+  display: flex;
+  align-items: center;
+}
+.page--admin .top__right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* Center title "ADMIN" */
+.page--admin .logo--text {
+  font-size: var(--t-small);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1;
+}
+
+/* Section head: Entries + count 한 줄 */
+.page--admin .section__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.page--admin .meta {
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* Password section spacing 조금 정리 */
+.page--admin .section__title {
+  margin-top: 0; /* 메인용 margin-top 제거 */
+  margin-bottom: 10px;
+}
+
+/* Chips: 네모 버튼 -> 타이포 링크 느낌 */
+.page--admin .filters {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+.page--admin .chip {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+}
+.page--admin .chip.is-active {
+  text-decoration: underline;
+}
+
+/* Export: 버튼 네모 -> 텍스트 링크 */
+.page--admin .exports {
+  display: flex;
+  gap: 18px;
+  padding: 10px 0;
+}
+
+/* Entries list typography */
+.page--admin .list {
+  padding: 14px 0;
+  display: flex;
+  flex-direction: column;
+}
+.page--admin .item {
+  padding: 14px 0;
+}
+.page--admin .item + .item {
+  border-top: 1px solid #000;
+}
+.page--admin .item__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+.page--admin .item__left {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+.page--admin .item__name {
+  font-weight: 700;
+  font-size: 16px;
+}
+.page--admin .item__tag {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.page--admin .item__date {
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.page--admin .item__msg {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.page--admin .empty {
+  color: var(--muted);
+  font-size: 13px;
+  padding: 10px 0;
+}

@@ -13,6 +13,12 @@ const pwForm = document.getElementById('pwForm');
 const pwHint = document.getElementById('pwHint');
 const lockBtn = document.getElementById('lockBtn');
 
+if (lockBtn) {
+  lockBtn.addEventListener('click', () => {
+    setUnlocked(false);
+  });
+}
+
 const listEl = document.getElementById('list');
 const countText = document.getElementById('countText');
 
@@ -115,10 +121,17 @@ function setUnlocked(on) {
 
   const unlocked = sessionStorage.getItem(SESSION_KEY) === '1';
 
+  // ✅ 잠그면: gate 보여주고 content 숨기기
   if (gate) gate.classList.toggle('hidden', unlocked);
   if (content) content.classList.toggle('hidden', !unlocked);
 
-  if (pwHint) pwHint.textContent = '';
+  if (!unlocked) {
+    // 잠그면 입력칸/힌트 초기화(선택)
+    if (pwHint) pwHint.textContent = '';
+    const pwInput = document.getElementById('pw');
+    if (pwInput) pwInput.value = '';
+  }
+
   if (unlocked) render();
 }
 
